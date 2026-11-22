@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect | ARMIET Smart Campus Navigation &amp; Admin Portal</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =====================================
+         CAMPUS LIVE NOTICE / BROADCAST BAR
+    ====================================== -->
+    <div class="campus-broadcast-bar" id="campusBroadcastBar" style="display: none;">
+        <div class="broadcast-inner">
+            <span class="broadcast-tag"><i class="fa-solid fa-bullhorn"></i> CAMPUS NOTICE</span>
+            <span class="broadcast-text" id="broadcastText">Welcome to ARMIET Smart Navigation.</span>
+            <button class="broadcast-close" id="closeBroadcastBtn" title="Dismiss notice" aria-label="Dismiss notice">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- =====================================
+         NAVBAR
+    ====================================== -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <!-- ARMIET College Logo -->
+            <img src="armiet-logo.png" alt="ARMIET Logo" class="armiet-nav-logo" id="armietNavLogo" onerror="this.onerror=null; this.src='https://armiet.in/wp-content/uploads/2025/06/armiet-logo-1.png';">
+            <div class="logo-divider"></div>
+            <div class="logo-text">
+                <strong>Campus<span>Connect</span></strong>
+                <small>ARMIET SMART NAVIGATION</small>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="#home" class="nav-link active">Home</a>
+            <a href="#map" class="nav-link">Campus Map</a>
+            <a href="#locations" class="nav-link">Directory</a>
+            <a href="#about" class="nav-link">About</a>
+        </div>
+
+        <div class="nav-actions">
+            <!-- Theme Toggle -->
+            <button class="theme-toggle-btn" id="themeToggle" title="Toggle Theme" aria-label="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+
+            <!-- Admin Portal Button -->
+            <button class="admin-nav-btn" id="adminNavBtn" title="Campus Administration Portal">
+                <i class="fa-solid fa-user-shield"></i>
+                <span id="adminNavText">Admin Portal</span>
+            </button>
+
+            <!-- Navigation CTA -->
+            <a href="#map" class="nav-cta-btn">
+                <i class="fa-solid fa-route"></i>
+                <span>Find Route</span>
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" class="mobile-link">Home</a>
+        <a href="#map" class="mobile-link">Campus Map</a>
+        <a href="#locations" class="mobile-link">Directory</a>
+        <a href="#about" class="mobile-link">About</a>
+        <button class="mobile-admin-btn" id="mobileAdminBtn">
+            <i class="fa-solid fa-user-shield"></i>
+            <span>Admin Portal Console</span>
+        </button>
+        <div class="mobile-menu-footer">
+            <span class="badge-mini"><i class="fa-solid fa-shield-halved"></i> ARMIET Live Campus System</span>
+        </div>
+    </div>
+
+    <!-- =====================================
+         MAIN PUBLIC VIEW CONTAINER
+    ====================================== -->
+    <main id="publicViewContainer">
+
+        <!-- =====================================
+             HERO SECTION
+        ====================================== -->
+        <section class="hero" id="home">
+            <div class="hero-content">
+                <div class="badge">
+                    <span class="pulse-indicator"></span>
+                    <span>ALAMURI RATNAMALA INSTITUTE OF ENGINEERING &amp; TECHNOLOGY</span>
+                </div>
+
+                <h1>
+                    Find Your Way Around
+                    <span class="gradient-text">ARMIET</span>
+                </h1>
+
+                <p>
+                    Explore lecture halls, research laboratories, HOD cabins, administrative offices, 
+                    and campus amenities with intelligent corridor routing and turn-by-turn guidance.
+                </p>
+
+                <!-- SEARCH WRAPPER -->
+                <div class="search-wrapper">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search classrooms, labs, offices, stairs..." autocomplete="off">
+                        <button class="clear-btn" id="clearBtn" type="button" title="Clear search" aria-label="Clear search">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="suggestions" id="suggestions"></div>
+                </div>
+
+                <!-- HERO QUICK TAGS -->
+                <div class="hero-quick-tags">
+                    <span class="quick-label">Popular Destinations:</span>
+                    <button class="quick-tag" data-target="Admin Office">Admin Office</button>
+                    <button class="quick-tag" data-target="AIML Lab 14">AIML Lab 14</button>
+                    <button class="quick-tag" data-target="AR/VR Lab">AR/VR Lab</button>
+                    <button class="quick-tag" data-target="Exam Section">Exam Section</button>
+                    <button class="quick-tag" data-target="Placement Cell">Placement Cell</button>
+                    <button class="quick-tag" data-target="Computer Lab">Computer Lab</button>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#map" class="explore-btn">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        Explore Interactive Map
+                    </a>
+                    <a href="#locations" class="secondary-btn">
+                        <i class="fa-solid fa-compass"></i>
+                        Browse Directory (40+)
+                    </a>
+                </div>
+            </div>
+
+            <!-- HERO DECORATION -->
+            <div class="hero-decoration">
+                <div class="floating-card card-one">
+                    <i class="fa-solid fa-building-columns"></i>
+                    <div>
+                        <strong>ARMIET Campus</strong>
+                        <span>Engineering &amp; Tech</span>
+                    </div>
+                </div>
+
+                <div class="hero-circle">
+                    <div class="hero-circle-inner">
+                        <img src="armiet-emblem.png" alt="ARMIET Emblem" class="hero-circle-emblem" onerror="this.onerror=null; this.src='https://armiet.in/wp-content/uploads/2026/07/Armiet-Logo.png';">
+                    </div>
+                    <div class="orbit-dot orbit-dot-1"></div>
+                    <div class="orbit-dot orbit-dot-2"></div>
+                </div>
+
+                <div class="floating-card card-two">
+                    <i class="fa-solid fa-route"></i>
+                    <div>
+                        <strong>Smart Routing</strong>
+                        <span>Corridor Walking Paths</span>
+                    </div>
+                </div>
+
+                <div class="floating-card card-three">
+                    <i class="fa-solid fa-wheelchair"></i>
+                    <div>
+                        <strong>Accessible</strong>
+                        <span>Stairs &amp; Lift Support</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================
+             MAP SECTION
+        ====================================== -->
+        <section class="map-section" id="map">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">
+                        <i class="fa-solid fa-compass"></i> INTERACTIVE WAYFINDING
+                    </span>
+                    <h2>
+                        Navigate Your <span>Campus</span>
+                    </h2>
+                    <p>
+                        Select your starting point and destination to compute corridor-accurate walking paths across floors.
+                    </p>
+                </div>
+
+                <div class="heading-actions">
+                    <button class="reset-btn" id="resetBtn" type="button" title="Reset current selection and route">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Reset Map</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ROUTE PLANNER -->
+            <div class="route-planner-card">
+                <div class="route-planner-header">
+                    <div class="route-planner-title">
+                        <i class="fa-solid fa-route"></i>
+                        <span>Trip Planner</span>
+                    </div>
+                    <div class="route-options">
+                        <label class="accessibility-toggle" title="Route via elevator/lift for wheelchair accessibility">
+                            <input type="checkbox" id="accessibleToggle">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label"><i class="fa-solid fa-wheelchair"></i> Elevator Preferred</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="route-planner-grid">
+                    <div class="route-field">
+                        <label for="startLocation">
+                            <i class="fa-solid fa-circle start-dot"></i>
+                            <span>STARTING LOCATION</span>
+                        </label>
+                        <div class="select-wrapper">
+                            <i class="fa-solid fa-person-walking select-icon"></i>
+                            <select id="startLocation">
+                                <option value="">Choose starting point...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="swap-icon" id="swapBtn" type="button" title="Swap Starting Point & Destination" aria-label="Swap Starting Point & Destination">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    </button>
+
+                    <div class="route-field">
+                        <label for="destinationLocation">
+                            <i class="fa-solid fa-location-dot dest-dot"></i>
+                            <span>DESTINATION</span>
+                        </label>
+                        <div class="select-wrapper">
+                            <i class="fa-solid fa-bullseye select-icon"></i>
+                            <select id="destinationLocation">
+                                <option value="">Choose destination...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="route-actions-group">
+                        <button class="route-btn" id="routeBtn" type="button">
+                            <i class="fa-solid fa-diamond-turn-right"></i>
+                            <span>Find Route</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- FAST PRESETS -->
+                <div class="quick-route-presets">
+                    <span class="preset-label"><i class="fa-solid fa-bolt"></i> Quick Routes:</span>
+                    <button class="preset-btn" data-start="Main Entrance" data-dest="Admin Office">Entrance → Admin</button>
+                    <button class="preset-btn" data-start="Main Entrance" data-dest="AIML Lab 14">Entrance → AIML 14</button>
+                    <button class="preset-btn" data-start="Admin Office" data-dest="Exam Section">Admin → Exam Section</button>
+                    <button class="preset-btn" data-start="Main Entrance" data-dest="AR/VR Lab">Entrance → AR/VR Lab</button>
+                    <button class="preset-btn" data-start="Computer Lab" data-dest="Drawing Room">Computer Lab → Drawing</button>
+                </div>
+            </div>
+
+            <!-- MAP CONTAINER -->
+            <div class="map-container">
+                <!-- MAP TOP BAR -->
+                <div class="map-topbar">
+                    <div class="map-title">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <div>
+                            <strong>ARMIET Campus Visual Layout</strong>
+                            <span>Click any room for instant actions, details &amp; routing</span>
+                        </div>
+                    </div>
+
+                    <!-- MAP CONTROLS & ZOOM -->
+                    <div class="map-toolbar">
+                        <div class="zoom-controls">
+                            <button class="zoom-btn" id="zoomInBtn" title="Zoom In" aria-label="Zoom In">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button class="zoom-btn" id="zoomOutBtn" title="Zoom Out" aria-label="Zoom Out">
+                                <i class="fa-solid fa-minus"></i>
+                            </button>
+                            <button class="zoom-btn" id="zoomResetBtn" title="Reset Zoom" aria-label="Reset Zoom">
+                                <i class="fa-solid fa-expand"></i>
+                            </button>
+                        </div>
+
+                        <div class="map-status">
+                            <span class="status-indicator"></span>
+                            <span class="status-text">LIVE MAP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FLOOR SWITCHER & LEGEND -->
+                <div class="floor-controls-bar">
+                    <div class="floor-switcher">
+                        <button class="floor-btn active" data-floor="ground" type="button">
+                            <i class="fa-solid fa-building"></i>
+                            <span>Ground Floor</span>
+                            <span class="floor-level-tag">L00</span>
+                        </button>
+
+                        <button class="floor-btn" data-floor="first" type="button">
+                            <i class="fa-solid fa-stairs"></i>
+                            <span>First Floor</span>
+                            <span class="floor-level-tag">L01</span>
+                        </button>
+                    </div>
+
+                    <!-- CATEGORY LEGEND BAR -->
+                    <div class="map-legend">
+                        <span class="legend-item"><span class="legend-color legend-lab"></span> Labs</span>
+                        <span class="legend-item"><span class="legend-color legend-class"></span> Classrooms</span>
+                        <span class="legend-item"><span class="legend-color legend-office"></span> Offices</span>
+                        <span class="legend-item"><span class="legend-color legend-stairs"></span> Stairs / Lift</span>
+                    </div>
+                </div>
+
+                <!-- MULTI-LEG CROSS-FLOOR BANNER (Visible during cross-floor routing) -->
+                <div class="cross-floor-banner" id="crossFloorBanner" style="display: none;">
+                    <div class="banner-pill">
+                        <i class="fa-solid fa-shuffle"></i>
+                        <span id="crossFloorText">Cross-Floor Route in Progress</span>
+                    </div>
+                    <div class="cross-floor-tabs">
+                        <button class="leg-tab active" id="legTabGround" data-floor="ground">
+                            <i class="fa-solid fa-1"></i> Ground Floor Leg
+                        </button>
+                        <span class="leg-separator"><i class="fa-solid fa-arrow-right"></i></span>
+                        <button class="leg-tab" id="legTabFirst" data-floor="first">
+                            <i class="fa-solid fa-2"></i> First Floor Leg
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MAP WRAPPER WITH PAN/ZOOM CAPABILITY -->
+                <div class="map-swipe-hint">
+                    <i class="fa-solid fa-arrows-left-right"></i>
+                    <span>Swipe or drag map to explore all rooms and wings</span>
+                </div>
+                <div class="map-viewport" id="mapViewport">
+
+                    <!-- =================================
+                         GROUND FLOOR MAP
+                    ================================== -->
+                    <div class="floor-map active-floor" data-floor="ground" id="floorMapGround">
+                        <div class="floor-map-header">
+                            <div class="floor-badge-container">
+                                <span class="level-indicator">LEVEL 00</span>
+                                <h3>Ground Floor Plan</h3>
+                                <p class="floor-subtitle">Laboratories, Administrative Wing, Main Entry &amp; Central Court</p>
+                            </div>
+                            <div class="floor-icon-badge">
+                                <i class="fa-solid fa-building"></i>
+                            </div>
+                        </div>
+
+                        <div class="interactive-floor" id="groundInteractiveFloor">
+                            <!-- Compass -->
+                            <div class="map-compass">
+                                <span class="compass-n">N</span>
+                                <i class="fa-solid fa-location-arrow"></i>
+                            </div>
+
+                            <!-- Architectural Hallway Corridors Visual Overlay -->
+                            <div class="hallway-corridor hallway-north">
+                                <span>North Corridor</span>
+                            </div>
+                            <div class="hallway-corridor hallway-south">
+                                <span>South Corridor</span>
+                            </div>
+                            <div class="hallway-corridor hallway-west">
+                                <span>West Hall</span>
+                            </div>
+                            <div class="hallway-corridor hallway-east">
+                                <span>East Hall</span>
+                            </div>
+
+                            <!-- SVG ROUTE LAYER -->
+                            <svg class="floor-route-svg" id="svgGround"></svg>
+
+                            <!-- TOP ROOMS -->
+                            <button class="floor-location chem" data-location="Chemistry Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-flask"></i>
+                                <span>Chemistry Lab</span>
+                            </button>
+
+                            <button class="floor-location physics" data-location="Physics Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-atom"></i>
+                                <span>Physics Lab</span>
+                            </button>
+
+                            <button class="floor-location bee" data-location="BEE Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>BEE Lab</span>
+                            </button>
+
+                            <button class="floor-location language" data-location="Language Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-language"></i>
+                                <span>Language Lab</span>
+                            </button>
+
+                            <button class="floor-location mechanics" data-location="Mechanics Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-gears"></i>
+                                <span>Mechanics Lab</span>
+                            </button>
+
+                            <button class="floor-location hod" data-location="HOD Cabin">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>HOD Cabin</span>
+                            </button>
+
+                            <button class="floor-location store" data-location="Store Room">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-box"></i>
+                                <span>Store Room</span>
+                            </button>
+
+                            <!-- LEFT SIDE -->
+                            <button class="floor-location admin" data-location="Admin Office">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-building-user"></i>
+                                <span>Admin Office</span>
+                            </button>
+
+                            <button class="floor-location entrance" data-location="Main Entrance">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-door-open"></i>
+                                <span>Main Entrance</span>
+                            </button>
+
+                            <button class="floor-location assembly" data-location="Assembly Area">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-people-group"></i>
+                                <span>Assembly Area</span>
+                            </button>
+
+                            <button class="floor-location principal" data-location="Principal Cabin">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-user-shield"></i>
+                                <span>Principal Cabin</span>
+                            </button>
+
+                            <button class="floor-location commonroom" data-location="Common Room">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-users"></i>
+                                <span>Common Room</span>
+                            </button>
+
+                            <!-- CENTER AREA -->
+                            <div class="common-area" id="groundCentralArea">
+                                <i class="fa-solid fa-tree"></i>
+                                <strong>Central Open Courtyard</strong>
+                                <span>Common Student Assembly &amp; Green Quad</span>
+                            </div>
+
+                            <!-- RIGHT SIDE -->
+                            <button class="floor-location etc" data-location="ETC Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-microchip"></i>
+                                <span>ETC Lab</span>
+                            </button>
+
+                            <button class="floor-location shop" data-location="Shop">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span>Campus Shop</span>
+                            </button>
+
+                            <button class="floor-location darklab" data-location="Dark Room Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-camera"></i>
+                                <span>Dark Room Lab</span>
+                            </button>
+
+                            <button class="floor-location dronelab" data-location="Drone Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-helicopter"></i>
+                                <span>Drone Lab</span>
+                            </button>
+
+                            <!-- BOTTOM ROOMS -->
+                            <button class="floor-location c1" data-location="C1">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-chalkboard"></i>
+                                <span>Class C1</span>
+                            </button>
+
+                            <button class="floor-location c2" data-location="C2">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-chalkboard"></i>
+                                <span>Class C2</span>
+                            </button>
+
+                            <button class="floor-location lab3" data-location="Lab 3">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-vial"></i>
+                                <span>Lab 3</span>
+                            </button>
+
+                            <button class="floor-location lab2" data-location="Lab 2">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-vial"></i>
+                                <span>Lab 2</span>
+                            </button>
+
+                            <button class="floor-location lab1" data-location="Lab 1">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-vial"></i>
+                                <span>Lab 1</span>
+                            </button>
+
+                            <button class="floor-location arvr" data-location="AR/VR Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-vr-cardboard"></i>
+                                <span>AR/VR Lab</span>
+                            </button>
+
+                            <!-- STAIRS -->
+                            <button class="floor-location ground-stairs-left" data-location="Ground Floor Stairs Left">
+                                <i class="fa-solid fa-stairs"></i>
+                                <span>West Stairs</span>
+                            </button>
+
+                            <button class="floor-location ground-stairs-right" data-location="Ground Floor Stairs Right">
+                                <i class="fa-solid fa-stairs"></i>
+                                <span>East Stairs</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- =================================
+                         FIRST FLOOR MAP
+                    ================================== -->
+                    <div class="floor-map" data-floor="first" id="floorMapFirst">
+                        <div class="floor-map-header">
+                            <div class="floor-badge-container">
+                                <span class="level-indicator">LEVEL 01</span>
+                                <h3>First Floor Plan</h3>
+                                <p class="floor-subtitle">Computer Science Labs, AIML Center, Placement Cell &amp; Lecture Halls</p>
+                            </div>
+                            <div class="floor-icon-badge">
+                                <i class="fa-solid fa-stairs"></i>
+                            </div>
+                        </div>
+
+                        <div class="interactive-floor" id="firstInteractiveFloor">
+                            <!-- Compass -->
+                            <div class="map-compass">
+                                <span class="compass-n">N</span>
+                                <i class="fa-solid fa-location-arrow"></i>
+                            </div>
+
+                            <!-- Architectural Hallway Corridors Visual Overlay -->
+                            <div class="hallway-corridor hallway-north">
+                                <span>North Gallery</span>
+                            </div>
+                            <div class="hallway-corridor hallway-south">
+                                <span>South Gallery</span>
+                            </div>
+                            <div class="hallway-corridor hallway-west">
+                                <span>West Gallery</span>
+                            </div>
+                            <div class="hallway-corridor hallway-east">
+                                <span>East Gallery</span>
+                            </div>
+
+                            <!-- SVG ROUTE LAYER -->
+                            <svg class="floor-route-svg" id="svgFirst"></svg>
+
+                            <!-- TOP ROOMS -->
+                            <button class="floor-location computerlab" data-location="Computer Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-computer"></i>
+                                <span>Computer Lab</span>
+                            </button>
+
+                            <button class="floor-location examsection" data-location="Exam Section">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-file-circle-check"></i>
+                                <span>Exam Section</span>
+                            </button>
+
+                            <button class="floor-location placement" data-location="Placement Cell">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-briefcase"></i>
+                                <span>Placement Cell</span>
+                            </button>
+
+                            <button class="floor-location ug19" data-location="UG 19">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-door-closed"></i>
+                                <span>UG 19</span>
+                            </button>
+
+                            <!-- RIGHT SIDE -->
+                            <button class="floor-location ug18" data-location="UG 18">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-door-closed"></i>
+                                <span>UG 18</span>
+                            </button>
+
+                            <button class="floor-location ug16" data-location="UG 16">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-door-closed"></i>
+                                <span>UG 16</span>
+                            </button>
+
+                            <button class="floor-location ug15lab" data-location="UG 15 Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-flask"></i>
+                                <span>UG 15 Lab</span>
+                            </button>
+
+                            <button class="floor-location roomc11" data-location="Room C11">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-chalkboard"></i>
+                                <span>Room C11</span>
+                            </button>
+
+                            <!-- CENTER -->
+                            <div class="courtyard" id="firstCentralArea">
+                                <i class="fa-solid fa-building-columns"></i>
+                                <strong>Atrium Gallery</strong>
+                                <span>Level 01 Open Balcony</span>
+                            </div>
+
+                            <button class="floor-location lift" data-location="Lift">
+                                <i class="fa-solid fa-elevator"></i>
+                                <span>Elevator Lift</span>
+                            </button>
+
+                            <button class="floor-location itlab" data-location="IT Lab">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-laptop-code"></i>
+                                <span>IT Lab</span>
+                            </button>
+
+                            <button class="floor-location mmshall" data-location="MMS Hall">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-person-chalkboard"></i>
+                                <span>MMS Hall</span>
+                            </button>
+
+                            <!-- BOTTOM ROOMS -->
+                            <button class="floor-location aiml14" data-location="AIML Lab 14">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-robot"></i>
+                                <span>AIML Lab 14</span>
+                            </button>
+
+                            <button class="floor-location aiml15" data-location="AIML Lab 15">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-robot"></i>
+                                <span>AIML Lab 15</span>
+                            </button>
+
+                            <button class="floor-location cese" data-location="CESE">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-door-closed"></i>
+                                <span>CESE</span>
+                            </button>
+
+                            <button class="floor-location cete" data-location="CETE">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-door-closed"></i>
+                                <span>CETE</span>
+                            </button>
+
+                            <button class="floor-location ug08" data-location="UG 08">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-door-closed"></i>
+                                <span>UG 08</span>
+                            </button>
+
+                            <button class="floor-location ug09" data-location="UG 09">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-door-closed"></i>
+                                <span>UG 09</span>
+                            </button>
+
+                            <button class="floor-location drawing" data-location="Drawing Room">
+                                <span class="status-dot"></span>
+                                <i class="fa-solid fa-pencil"></i>
+                                <span>Drawing Room</span>
+                            </button>
+
+                            <!-- STAIRS -->
+                            <button class="floor-location first-stairs-top" data-location="First Floor Stairs Top">
+                                <i class="fa-solid fa-stairs"></i>
+                                <span>West Stairs</span>
+                            </button>
+
+                            <button class="floor-location first-stairs-right" data-location="First Floor Stairs Right">
+                                <i class="fa-solid fa-stairs"></i>
+                                <span>East Stairs</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ROUTE RESULT & STEP-BY-STEP DIRECTIONS -->
+            <div class="route-result" id="routeResult">
+                <div class="route-empty">
+                    <div class="route-empty-icon">
+                        <i class="fa-solid fa-route"></i>
+                    </div>
+                    <h3>Ready to Navigate</h3>
+                    <p>
+                        Select a starting location and destination above, or tap any room on the map to begin your route across the ARMIET campus.
+                    </p>
+                    <div class="route-empty-hint">
+                        <span><i class="fa-solid fa-lightbulb"></i> Tip: You can also click room cards in the directory below for instant directions.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================
+             LOCATIONS DIRECTORY SECTION
+        ====================================== -->
+        <section class="locations-section" id="locations">
+            <div class="section-heading center">
+                <span class="section-label">
+                    <i class="fa-solid fa-list-check"></i> CAMPUS DIRECTORY
+                </span>
+                <h2>
+                    Find Every <span>Location</span>
+                </h2>
+                <p>
+                    Browse through all campus rooms, laboratories, faculty cabins, and facilities. Tap any card to navigate immediately.
+                </p>
+            </div>
+
+            <!-- SEARCH & FILTERS -->
+            <div class="directory-toolbar">
+                <div class="directory-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="directorySearchInput" placeholder="Filter rooms by name, keyword, or floor...">
+                </div>
+
+                <div class="location-filter">
+                    <button class="location-filter-btn active" data-filter="all">All</button>
+                    <button class="location-filter-btn" data-filter="lab"><i class="fa-solid fa-flask"></i> Laboratories</button>
+                    <button class="location-filter-btn" data-filter="classroom"><i class="fa-solid fa-chalkboard"></i> Classrooms</button>
+                    <button class="location-filter-btn" data-filter="office"><i class="fa-solid fa-building-user"></i> Offices</button>
+                    <button class="location-filter-btn" data-filter="common"><i class="fa-solid fa-users"></i> Common Areas</button>
+                    <button class="location-filter-btn" data-filter="stairs"><i class="fa-solid fa-stairs"></i> Stairs &amp; Lift</button>
+                </div>
+            </div>
+
+            <!-- LOCATION CARDS DYNAMIC GRID -->
+            <div class="location-grid" id="locationGrid">
+                <!-- Dynamically populated via script.js -->
+            </div>
+        </section>
+
+        <!-- =====================================
+             ABOUT SECTION
+        ====================================== -->
+        <section class="about-section" id="about">
+            <div class="about-content">
+                <span class="section-label">
+                    <i class="fa-solid fa-circle-info"></i> ABOUT THE INSTITUTION
+                </span>
+                <h2>
+                    Alamuri Ratnamala Institute of <span>Engineering &amp; Technology</span>
+                </h2>
+                <p>
+                    <strong>ARMIET</strong>, established under the Koti Vidya Charitable Trust, is a premier engineering institution affiliated with the University of Mumbai and approved by AICTE, New Delhi &amp; DTE Maharashtra (DTE Code: 3219).
+                </p>
+                <p>
+                    The <strong>CampusConnect</strong> wayfinding project serves our student community, visiting recruiters, examiners, and guests with precision navigation across academic departments, research hubs, and administrative wings.
+                </p>
+
+                <div class="about-features-list">
+                    <div class="about-feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-diamond-turn-right"></i></div>
+                        <div>
+                            <strong>Intelligent Corridor Pathfinding</strong>
+                            <p>Clean walking trajectories along actual hallway corridors rather than unrealistic straight lines.</p>
+                        </div>
+                    </div>
+                    <div class="about-feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-stairs"></i></div>
+                        <div>
+                            <strong>Seamless Multi-Floor Traversal</strong>
+                            <p>Coordinates between Ground Floor and Level 01 using West and East staircases or the central elevator.</p>
+                        </div>
+                    </div>
+                    <div class="about-feature-item">
+                        <div class="feature-icon"><i class="fa-solid fa-user-shield"></i></div>
+                        <div>
+                            <strong>Live Admin Management</strong>
+                            <p>Real-time room occupancy, status toggles, and campus-wide notice broadcasting.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <strong>2</strong>
+                        <span>Full Levels</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong id="statRoomCount">44+</strong>
+                        <span>Mapped Rooms</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong>DTE 3219</strong>
+                        <span>ARMIET Code</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-visual">
+                <div class="about-card">
+                    <div class="about-card-badge">ARMIET EST. 2008</div>
+                    <img src="armiet-emblem.png" alt="ARMIET Emblem" class="about-card-emblem" onerror="this.onerror=null; this.src='https://armiet.in/wp-content/uploads/2026/07/Armiet-Logo.png';">
+                    <h3>Smart Campus Wayfinding</h3>
+                    <p>
+                        Pinpoint classrooms, labs, HOD offices, and amenities in seconds with live room inspection and instant routes.
+                    </p>
+                    <div class="about-card-metrics">
+                        <div>
+                            <small>Campus Area</small>
+                            <span>Shahapur Campus</span>
+                        </div>
+                        <div>
+                            <small>University</small>
+                            <span>Mumbai Univ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="armiet-logo.png" alt="ARMIET Logo" class="armiet-footer-logo" onerror="this.onerror=null; this.src='https://armiet.in/wp-content/uploads/2025/06/armiet-logo-1.png';">
+                        <div>
+                            <strong>CampusConnect</strong>
+                            <span>ARMIET Smart Campus Navigation</span>
+                        </div>
+                    </div>
+                    <p class="footer-tagline">
+                        Alamuri Ratnamala Institute of Engineering &amp; Technology<br>
+                        A.S. Rao Nagar, Vill: Sapgaon, Tal: Shahapur, Dist: Thane - 421 601, Maharashtra, India.
+                    </p>
+                    <div class="footer-accreditations">
+                        <span><i class="fa-solid fa-award"></i> Approved by AICTE, New Delhi</span>
+                        <span><i class="fa-solid fa-building-columns"></i> Affiliated to University of Mumbai</span>
+                    </div>
+                </div>
+
+                <div class="footer-links-group">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <a href="#home">Home</a>
+                        <a href="#map">Interactive Map</a>
+                        <a href="#locations">Campus Directory</a>
+                        <a href="#about">About ARMIET</a>
+                        <a href="#" id="footerAdminLink"><i class="fa-solid fa-lock"></i> Admin Console</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Popular Labs</h4>
+                        <a href="#map" onclick="quickNav('AIML Lab 14')">AIML Lab 14</a>
+                        <a href="#map" onclick="quickNav('AR/VR Lab')">AR/VR Lab</a>
+                        <a href="#map" onclick="quickNav('Drone Lab')">Drone Lab</a>
+                        <a href="#map" onclick="quickNav('Computer Lab')">Computer Lab</a>
+                        <a href="#map" onclick="quickNav('Admin Office')">Admin Office</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 CampusConnect &bull; ARMIET Smart Navigation Project. All rights reserved.</p>
+                <div class="footer-badges">
+                    <span><i class="fa-solid fa-code"></i> Modern Web Guidance</span>
+                    <span><i class="fa-solid fa-shield"></i> DTE Code 3219</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- =====================================
+         ADMIN PORTAL DEDICATED VIEW
+    ====================================== -->
+    <div class="admin-portal-wrapper" id="adminPortalWrapper" style="display: none;">
+        <!-- ADMIN TOPBAR -->
+        <header class="admin-topbar">
+            <div class="admin-brand">
+                <img src="armiet-logo.png" alt="ARMIET Logo" class="admin-logo-img" onerror="this.onerror=null; this.src='https://armiet.in/wp-content/uploads/2025/06/armiet-logo-1.png';">
+                <div class="admin-brand-text">
+                    <h2>ARMIET Campus Admin Portal</h2>
+                    <span>Navigation Management &amp; Room Control Center</span>
+                </div>
+            </div>
+
+            <div class="admin-user-controls">
+                <div class="admin-badge-indicator">
+                    <span class="admin-live-pulse"></span>
+                    <span>Admin Active: <strong>Administrator</strong></span>
+                </div>
+                <button class="admin-exit-btn" id="adminExitBtn" title="Back to Campus Map">
+                    <i class="fa-solid fa-map"></i>
+                    <span>View Map</span>
+                </button>
+                <button class="admin-logout-btn" id="adminLogoutBtn" title="Log out from Admin">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ADMIN MAIN CONTENT AREA -->
+        <div class="admin-body">
+            <!-- ADMIN SIDEBAR NAVIGATION -->
+            <aside class="admin-sidebar">
+                <nav class="admin-menu">
+                    <button class="admin-nav-item active" data-tab="overview">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard Overview</span>
+                    </button>
+                    <button class="admin-nav-item" data-tab="locations">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Manage Rooms (CRUD)</span>
+                    </button>
+                    <button class="admin-nav-item" data-tab="sequence">
+                        <i class="fa-solid fa-arrow-down-1-9"></i>
+                        <span>Class Sequence</span>
+                    </button>
+                    <button class="admin-nav-item" data-tab="notices">
+                        <i class="fa-solid fa-bullhorn"></i>
+                        <span>Campus Notices</span>
+                    </button>
+                    <button class="admin-nav-item" data-tab="status">
+                        <i class="fa-solid fa-toggle-on"></i>
+                        <span>Room Availability</span>
+                    </button>
+                    <button class="admin-nav-item" data-tab="settings">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>Data Backup &amp; Reset</span>
+                    </button>
+                </nav>
+
+                <div class="admin-sidebar-footer">
+                    <div class="admin-armiet-card">
+                        <img src="armiet-emblem.png" alt="ARMIET" class="admin-card-emblem" onerror="this.onerror=null; this.src='https://armiet.in/wp-content/uploads/2026/07/Armiet-Logo.png';">
+                        <small>ARMIET Shahapur</small>
+                        <strong>v2.5 Enterprise</strong>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- ADMIN TAB CONTENT SECTIONS -->
+            <main class="admin-tab-viewport">
+
+                <!-- 1. OVERVIEW TAB -->
+                <section class="admin-tab-pane active" id="tabOverview">
+                    <div class="tab-header">
+                        <div>
+                            <h3>Campus Overview &amp; Analytics</h3>
+                            <p>Real-time statistics of mapped locations, rooms, and floor assets.</p>
+                        </div>
+                        <button class="admin-btn-primary" id="btnQuickAddRoom">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add New Room</span>
+                        </button>
+                    </div>
+
+                    <div class="admin-kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-icon blue"><i class="fa-solid fa-door-open"></i></div>
+                            <div>
+                                <span class="kpi-label">Total Mapped Rooms</span>
+                                <strong class="kpi-value" id="kpiTotalRooms">44</strong>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                            <div>
+                                <span class="kpi-label">Available / Open</span>
+                                <strong class="kpi-value" id="kpiAvailableRooms">40</strong>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon orange"><i class="fa-solid fa-clock"></i></div>
+                            <div>
+                                <span class="kpi-label">In Class / Occupied</span>
+                                <strong class="kpi-value" id="kpiOccupiedRooms">3</strong>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                            <div>
+                                <span class="kpi-label">Under Maintenance</span>
+                                <strong class="kpi-value" id="kpiMaintenanceRooms">1</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-dashboard-split">
+                        <div class="admin-panel-card">
+                            <h4><i class="fa-solid fa-layer-group"></i> Rooms by Level</h4>
+                            <div class="floor-breakdown-list">
+                                <div class="breakdown-row">
+                                    <span>Ground Floor (Level 00)</span>
+                                    <strong id="kpiGroundCount">24 Rooms</strong>
+                                </div>
+                                <div class="breakdown-bar">
+                                    <div class="bar-fill" id="barGroundFill" style="width: 55%;"></div>
+                                </div>
+                                <div class="breakdown-row" style="margin-top: 16px;">
+                                    <span>First Floor (Level 01)</span>
+                                    <strong id="kpiFirstCount">20 Rooms</strong>
+                                </div>
+                                <div class="breakdown-bar">
+                                    <div class="bar-fill purple" id="barFirstFill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="admin-panel-card">
+                            <h4><i class="fa-solid fa-fire"></i> Most Navigated Rooms</h4>
+                            <ul class="popular-rooms-list">
+                                <li>
+                                    <span class="rank-badge">1</span>
+                                    <div class="room-pop-info">
+                                        <strong>Admin Office</strong>
+                                        <small>Ground Floor &bull; Admissions &amp; Enquiries</small>
+                                    </div>
+                                    <span class="search-count">1,240 searches</span>
+                                </li>
+                                <li>
+                                    <span class="rank-badge">2</span>
+                                    <div class="room-pop-info">
+                                        <strong>AIML Lab 14</strong>
+                                        <small>First Floor &bull; GPU Workstations</small>
+                                    </div>
+                                    <span class="search-count">980 searches</span>
+                                </li>
+                                <li>
+                                    <span class="rank-badge">3</span>
+                                    <div class="room-pop-info">
+                                        <strong>Exam Section</strong>
+                                        <small>First Floor &bull; University Controller</small>
+                                    </div>
+                                    <span class="search-count">840 searches</span>
+                                </li>
+                                <li>
+                                    <span class="rank-badge">4</span>
+                                    <div class="room-pop-info">
+                                        <strong>AR/VR Lab</strong>
+                                        <small>Ground Floor &bull; Spatial Computing</small>
+                                    </div>
+                                    <span class="search-count">710 searches</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. LOCATIONS MANAGEMENT TAB -->
+                <section class="admin-tab-pane" id="tabLocations">
+                    <div class="tab-header">
+                        <div>
+                            <h3>Room &amp; Class Management (CRUD)</h3>
+                            <p>Add, edit, inspect, or delete rooms and classes from the live campus wayfinding database.</p>
+                        </div>
+                        <div class="header-action-group">
+                            <button class="admin-btn-secondary" id="btnGoToSequence" title="Reorder Classroom Sequence">
+                                <i class="fa-solid fa-arrow-down-1-9"></i>
+                                <span>Change Class Sequence</span>
+                            </button>
+                            <button class="admin-btn-primary" id="btnAddNewLocation">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add New Room</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-controls-bar">
+                        <div class="admin-search-input-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="adminRoomSearch" placeholder="Filter by room name, category or floor...">
+                        </div>
+                        <div class="admin-table-filters">
+                            <select id="adminFloorFilter">
+                                <option value="all">All Floors</option>
+                                <option value="ground">Ground Floor (L00)</option>
+                                <option value="first">First Floor (L01)</option>
+                            </select>
+                            <select id="adminCategoryFilter">
+                                <option value="all">All Categories</option>
+                                <option value="classroom">Classrooms</option>
+                                <option value="lab">Laboratories</option>
+                                <option value="office">Offices</option>
+                                <option value="common">Common Areas</option>
+                                <option value="stairs">Stairs &amp; Lift</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="admin-table-container">
+                        <table class="admin-table" id="adminLocationsTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px;">Seq</th>
+                                    <th>Room Name &amp; Icon</th>
+                                    <th>Floor</th>
+                                    <th>Category</th>
+                                    <th>Wing &amp; Corridor</th>
+                                    <th>Live Status</th>
+                                    <th style="min-width: 170px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminTableBody">
+                                <!-- Populated dynamically by script.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 2.5 CLASS SEQUENCE & REORDER TAB -->
+                <section class="admin-tab-pane" id="tabSequence">
+                    <div class="tab-header">
+                        <div>
+                            <h3>Class Sequence &amp; Timetable Order</h3>
+                            <p>Control the sequence of classrooms (C1, C2, etc.) and campus spaces. Use Move Up/Down buttons, direct sequence numbers, or drag and drop.</p>
+                        </div>
+                        <div class="header-action-group">
+                            <button class="admin-btn-secondary" id="btnResetClassSequence" title="Reset class order to ARMIET defaults">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                <span>Reset Defaults</span>
+                            </button>
+                            <button class="admin-btn-primary" id="btnSaveClassSequence" title="Save sequence changes">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                <span>Save Sequence</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="sequence-toolbar">
+                        <div class="admin-search-input-wrap">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="adminSequenceSearch" placeholder="Filter classes by name, floor, or wing...">
+                        </div>
+                        <div class="admin-table-filters">
+                            <select id="adminSequenceScope">
+                                <option value="classrooms">Classrooms Only (C1, C2, etc.)</option>
+                                <option value="all">All Campus Locations</option>
+                                <option value="ground">Ground Floor Classrooms</option>
+                                <option value="first">First Floor Classrooms</option>
+                            </select>
+                            <button class="admin-btn-secondary" id="btnSequenceAddClass">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Add New Class</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="sequence-tip-banner">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span>Changes made here update the order of classes in the <strong>Campus Directory</strong>, <strong>Route Planner Dropdowns</strong>, and <strong>Admin Console</strong> immediately.</span>
+                    </div>
+
+                    <div class="sequence-list-container" id="adminSequenceList">
+                        <!-- Populated dynamically via script.js -->
+                    </div>
+                </section>
+
+                <!-- 3. CAMPUS NOTICES TAB -->
+                <section class="admin-tab-pane" id="tabNotices">
+                    <div class="tab-header">
+                        <div>
+                            <h3>Campus Broadcast &amp; Alerts</h3>
+                            <p>Post live announcements and emergency or event banners visible across all map users.</p>
+                        </div>
+                    </div>
+
+                    <div class="notice-composer-card">
+                        <h4><i class="fa-solid fa-pen-to-square"></i> Compose New Announcement</h4>
+                        <div class="form-group" style="margin-top: 14px;">
+                            <label>Notice Content</label>
+                            <textarea id="noticeTextInput" rows="3" placeholder="e.g. Annual Technical Symposium in progress in MMS Hall. All visitors welcome."></textarea>
+                        </div>
+                        <div class="notice-composer-actions">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="noticeActiveCheck" checked>
+                                <span>Display as top banner on campus map immediately</span>
+                            </label>
+                            <button class="admin-btn-primary" id="btnPublishNotice">
+                                <i class="fa-solid fa-bullhorn"></i>
+                                <span>Publish Notice</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="admin-panel-card" style="margin-top: 24px;">
+                        <h4><i class="fa-solid fa-clock-rotate-left"></i> Active &amp; Recent Notices</h4>
+                        <div class="notices-list" id="adminNoticesList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. ROOM AVAILABILITY & STATUS TAB -->
+                <section class="admin-tab-pane" id="tabStatus">
+                    <div class="tab-header">
+                        <div>
+                            <h3>Room Occupancy &amp; Status Control</h3>
+                            <p>Quickly toggle room availability between Open, In Class, and Maintenance.</p>
+                        </div>
+                    </div>
+
+                    <div class="status-grid" id="adminStatusGrid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+
+                <!-- 5. SETTINGS & BACKUP TAB -->
+                <section class="admin-tab-pane" id="tabSettings">
+                    <div class="tab-header">
+                        <div>
+                            <h3>Database Backup &amp; Reset</h3>
+                            <p>Export your campus map configuration as JSON, import custom plans, or reset to factory defaults.</p>
+                        </div>
+                    </div>
+
+                    <div class="backup-grid">
+                        <div class="backup-card">
+                            <i class="fa-solid fa-file-export backup-icon"></i>
+                            <h4>Export Campus Data</h4>
+                            <p>Download the complete current location database including room edits and custom additions as JSON.</p>
+                            <button class="admin-btn-secondary" id="btnExportJson">
+                                <i class="fa-solid fa-download"></i>
+                                <span>Export JSON</span>
+                            </button>
+                        </div>
+
+                        <div class="backup-card">
+                            <i class="fa-solid fa-file-import backup-icon"></i>
+                            <h4>Import Campus Data</h4>
+                            <p>Upload a JSON configuration file to update the campus locations database.</p>
+                            <input type="file" id="importJsonFileInput" accept=".json" style="display: none;">
+                            <button class="admin-btn-secondary" id="btnImportJson">
+                                <i class="fa-solid fa-upload"></i>
+                                <span>Import JSON</span>
+                            </button>
+                        </div>
+
+                        <div class="backup-card danger-card">
+                            <i class="fa-solid fa-triangle-exclamation backup-icon danger"></i>
+                            <h4>Reset to ARMIET Defaults</h4>
+                            <p>Revert all location edits, custom rooms, and status overrides to the official 44-room factory state.</p>
+                            <button class="admin-btn-danger" id="btnResetDefaults">
+                                <i class="fa-solid fa-rotate-left"></i>
+                                <span>Restore 44 Defaults</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- =====================================
+         ADMIN LOGIN MODAL
+    ====================================== -->
+    <div class="admin-login-backdrop" id="adminLoginModal" style="display: none;">
+        <div class="admin-login-card">
+            <button class="modal-close-btn" id="closeLoginModalBtn" aria-label="Close login dialog">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="login-header">
+                <img src="armiet-emblem.png" alt="ARMIET Emblem" class="login-emblem" onerror="this.onerror=null; this.src='https://armiet.in/wp-content/uploads/2026/07/Armiet-Logo.png';">
+                <h3>ARMIET Admin Portal</h3>
+                <p>Campus Wayfinding &amp; Room Management Console</p>
+            </div>
+
+            <form id="adminLoginForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="adminUsername">
+                        <i class="fa-solid fa-user"></i> Username
+                    </label>
+                    <input type="text" id="adminUsername" placeholder="Enter admin username" value="admin" autocomplete="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">
+                        <i class="fa-solid fa-lock"></i> Password
+                    </label>
+                    <input type="password" id="adminPassword" placeholder="Enter admin password" value="armiet@2026" autocomplete="current-password" required>
+                </div>
+
+                <div class="login-hint-badge">
+                    <i class="fa-solid fa-key"></i>
+                    <span>Default credentials: <strong>admin</strong> / <strong>armiet@2026</strong></span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="admin-btn-primary btn-block" id="btnLoginSubmit">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        <span>Secure Admin Login</span>
+                    </button>
+                    <button type="button" class="admin-btn-demo btn-block" id="btnQuickDemoLogin">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>One-Click Demo Login</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================
+         ADD / EDIT LOCATION MODAL
+    ====================================== -->
+    <div class="room-modal-backdrop" id="locationEditModalBackdrop" style="display: none;">
+        <div class="room-modal location-edit-modal">
+            <button class="modal-close-btn" id="closeLocationEditBtn" aria-label="Close form">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-header">
+                <div class="modal-icon-badge" id="editModalIconPreview">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+                <div class="modal-title-wrap">
+                    <div class="modal-tags">
+                        <span class="modal-tag category-tag" id="editModalActionTitle">Add / Edit Room</span>
+                    </div>
+                    <h3 id="editModalHeading">Location Details</h3>
+                </div>
+            </div>
+
+            <form id="locationEditForm" class="location-edit-form">
+                <input type="hidden" id="editOriginalName">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Room Name *</label>
+                        <input type="text" id="editLocationName" placeholder="e.g. IoT Innovation Lab or C10" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Floor Level *</label>
+                        <select id="editLocationFloor" required>
+                            <option value="ground">Ground Floor (Level 00)</option>
+                            <option value="first">First Floor (Level 01)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="editLocationCategory" required>
+                            <option value="classroom">Classroom / Lecture Hall</option>
+                            <option value="lab">Laboratory</option>
+                            <option value="office">Faculty / Admin Office</option>
+                            <option value="common">Common Area / Facility</option>
+                            <option value="stairs">Staircase / Elevator</option>
+                            <option value="other">Other / Campus Facility</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Wing Position</label>
+                        <select id="editLocationWing">
+                            <option value="North Wing">North Wing</option>
+                            <option value="South Wing">South Wing</option>
+                            <option value="West Wing">West Wing</option>
+                            <option value="East Wing">East Wing</option>
+                            <option value="Central Core">Central Core</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Door Corridor Attachment</label>
+                        <select id="editLocationDoorSide">
+                            <option value="north">North Corridor</option>
+                            <option value="south">South Corridor</option>
+                            <option value="west">West Hallway</option>
+                            <option value="east">East Hallway</option>
+                            <option value="center">Central Atrium</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Icon Class (FontAwesome)</label>
+                        <select id="editLocationIcon">
+                            <option value="fa-chalkboard">Chalkboard (Classroom)</option>
+                            <option value="fa-chalkboard-user">Chalkboard User (Lecture Hall)</option>
+                            <option value="fa-flask">Flask (Science / Chemistry)</option>
+                            <option value="fa-vial">Vial (Lab)</option>
+                            <option value="fa-atom">Atom (Physics)</option>
+                            <option value="fa-bolt">Lightning Bolt (BEE / Electrical)</option>
+                            <option value="fa-gears">Gears (Mechanics / Workshop)</option>
+                            <option value="fa-computer">Computer (Lab)</option>
+                            <option value="fa-laptop-code">Laptop Code (IT / Software)</option>
+                            <option value="fa-robot">Robot (AIML)</option>
+                            <option value="fa-vr-cardboard">VR Cardboard (AR/VR)</option>
+                            <option value="fa-helicopter">Helicopter (Drone Lab)</option>
+                            <option value="fa-language">Language (Language Lab)</option>
+                            <option value="fa-building-user">Building User (Admin Office)</option>
+                            <option value="fa-user-tie">User Tie (HOD / Faculty)</option>
+                            <option value="fa-briefcase">Briefcase (Placement / TPO)</option>
+                            <option value="fa-book">Book (Library)</option>
+                            <option value="fa-users">Users (Common Room)</option>
+                            <option value="fa-people-group">People Group (Assembly)</option>
+                            <option value="fa-box">Box (Store Room)</option>
+                            <option value="fa-door-open">Door Open (Entrance)</option>
+                            <option value="fa-door-closed">Door Closed (Class / Room)</option>
+                            <option value="fa-pencil">Pencil (Drawing Hall)</option>
+                            <option value="fa-camera">Camera (Dark Room)</option>
+                            <option value="fa-cart-shopping">Cart (Campus Shop / Canteen)</option>
+                            <option value="fa-stairs">Stairs</option>
+                            <option value="fa-elevator">Elevator / Lift</option>
+                            <option value="fa-user-shield">User Shield (Admin / Security)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description &amp; Purpose</label>
+                    <textarea id="editLocationDesc" rows="2" placeholder="Brief details about equipment, capacity, and student access..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Live Occupancy Status</label>
+                    <select id="editLocationStatus">
+                        <option value="available">Available / Open</option>
+                        <option value="occupied">In Class / Occupied</option>
+                        <option value="maintenance">Under Maintenance</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions" style="margin-top: 16px;">
+                    <button type="submit" class="admin-btn-primary" id="btnSaveLocation">
+                        <i class="fa-solid fa-floppy-disk"></i>
+                        <span>Save Location</span>
+                    </button>
+                    <button type="button" class="admin-btn-secondary" id="btnCancelEditLocation">
+                        <span>Cancel</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================
+         ROOM DETAILS MODAL / DRAWER (PUBLIC)
+    ====================================== -->
+    <div class="room-modal-backdrop" id="roomModalBackdrop">
+        <div class="room-modal" id="roomModal" role="dialog" aria-modal="true">
+            <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close details">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-header">
+                <div class="modal-icon-badge" id="modalIcon">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+                <div class="modal-title-wrap">
+                    <div class="modal-tags">
+                        <span class="modal-tag category-tag" id="modalCategory">Laboratory</span>
+                        <span class="modal-tag floor-tag" id="modalFloor">Ground Floor</span>
+                        <span class="modal-tag status-badge-inline" id="modalStatusBadge">Available</span>
+                    </div>
+                    <h3 id="modalName">Chemistry Lab</h3>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <p class="modal-desc" id="modalDesc">
+                    General &amp; applied chemistry laboratory for engineering students.
+                </p>
+
+                <div class="modal-meta-grid">
+                    <div class="meta-item">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <div>
+                            <small>Floor</small>
+                            <span id="modalFloorMeta">Ground Floor (L00)</span>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-location-crosshairs"></i>
+                        <div>
+                            <small>Wing Position</small>
+                            <span id="modalWing">North Wing</span>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fa-solid fa-stairs"></i>
+                        <div>
+                            <small>Nearest Staircase</small>
+                            <span id="modalStairs">West Stairs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="modal-btn btn-start" id="modalSetStart">
+                    <i class="fa-solid fa-person-walking"></i>
+                    <span>Set as Starting Point</span>
+                </button>
+                <button class="modal-btn btn-dest" id="modalSetDest">
+                    <i class="fa-solid fa-diamond-turn-right"></i>
+                    <span>Set as Destination</span>
+                </button>
+                <button class="modal-btn btn-from-entrance" id="modalRouteFromEntrance">
+                    <i class="fa-solid fa-door-open"></i>
+                    <span>Route from Entrance</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast-notification" id="toast">
+        <i class="fa-solid fa-circle-check toast-icon"></i>
+        <span class="toast-message" id="toastMessage">Action completed</span>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+</body>
+
+</html>
